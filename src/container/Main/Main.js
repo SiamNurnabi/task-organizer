@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import TaskTable from "../Task-Table/TaskTable";
+import LiveTimer from "../Live-Timer/LiveTimer";
 
 class Main extends Component {
   render() {
@@ -9,7 +10,9 @@ class Main extends Component {
           <strong>Automated Task Organizer</strong>
         </h1>
         <div className="row">
-          <div className="col-md-6 mt-5">Live timer</div>
+          <div className="col-md-6 mt-5">
+            <LiveTimer />
+          </div>
 
           {/* task table */}
           <div className="col-md-6 mt-5">

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Button, Modal } from "react-bootstrap";
-import PropTypes from "prop-types";
+import * as actionCreators from "../../store/actions/actions";
+// import * as actionTypes from "../../store/actions/actions";
+// import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Aux from "../../hoc/Auxiliary/Auxiliary";
 
@@ -36,7 +38,7 @@ class TaskTable extends Component {
   };
   render() {
     let tasks = <p className="text-center">Please add task</p>;
-    if (this.state.tasks) {
+    if (this.props.tasks) {
       tasks = this.props.tasks.map((task, index) => {
         return (
           <tbody key={task.id + index}>
@@ -143,18 +145,35 @@ const mapStateToProps = (state) => {
   };
 };
 
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     addTaskHandler: (name, duration) =>
+//       dispatch({ type: actionTypes.ADD_TASK, name: name, duration: duration }),
+//     deleteTaskHandler: (id) =>
+//       dispatch({ type: actionTypes.DELETE_TASK, taskId: id }),
+//     editTaskHandler: (id, name, duration) =>
+//       dispatch({
+//         type: actionTypes.EDIT_TASK,
+//         name: name,
+//         taskId: id,
+//         duration: duration,
+//       }),
+//   };
+// };
 const mapDispatchToProps = (dispatch) => {
   return {
     addTaskHandler: (name, duration) =>
-      dispatch({ type: "ADD_TASK", name: name, duration: duration }),
-    deleteTaskHandler: (id) => dispatch({ type: "DELETE_TASK", taskId: id }),
+      dispatch(actionCreators.addTask(name, duration)),
+    deleteTaskHandler: (id) => dispatch(actionCreators.deleteTask(id)),
     editTaskHandler: (id, name, duration) =>
-      dispatch({
-        type: "EDIT_TASK",
-        name: name,
-        taskId: id,
-        duration: duration,
-      }),
+      dispatch(actionCreators.editTask(id, name, duration)),
+    // editTaskHandler: (id, name, duration) =>
+    //   dispatch({
+    //     type: actionTypes.EDIT_TASK,
+    //     name: name,
+    //     taskId: id,
+    //     duration: duration,
+    //   }),
   };
 };
 
