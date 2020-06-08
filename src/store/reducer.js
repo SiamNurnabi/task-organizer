@@ -6,6 +6,8 @@ const initialState = {
   counter: 0,
   play: false,
   pause: true,
+  alert: null,
+  temp: 0,
 };
 const reducer = (state = initialState, action) => {
   if (action.type === actionTypes.ADD_TASK) {
@@ -49,6 +51,7 @@ const reducer = (state = initialState, action) => {
       counter: state.counter + 1,
       play: true,
       pause: false,
+      alert: true,
     };
   }
   if (action.type === actionTypes.PAUSE_TIMER) {
@@ -64,6 +67,8 @@ const reducer = (state = initialState, action) => {
       counter: 0,
       play: false,
       pause: true,
+      alert: false,
+      temp: 0,
     };
   }
 

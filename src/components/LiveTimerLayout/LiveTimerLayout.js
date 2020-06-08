@@ -1,7 +1,7 @@
 import React from "react";
 
 const liveTimerLayout = (props) => {
-  const color = [
+  const colors = [
     "#E74C3C",
     "#884EA0",
     "#E67E22",
@@ -21,8 +21,9 @@ const liveTimerLayout = (props) => {
   });
   const taskName = props.tasks.map((task) => {
     sum += +task.duration;
-    if (sum <= 60) return task.name;
+    if (sum <= 60) return [task.name, task.duration];
   });
+  // console.log(taskName);
   const updatedTask = taskDuraion
     .sort(function (a, b) {
       return a - b;
@@ -33,10 +34,10 @@ const liveTimerLayout = (props) => {
           key={index}
           style={{
             height: `${+task * 10}px`,
-            background: `${color[index % 11]}`,
+            background: `${colors[index % 11]}`,
           }}
         >
-          {/* {`${task} seconds`} */}
+          {`${task} second`}
         </div>
       );
     });
@@ -60,6 +61,7 @@ const liveTimerLayout = (props) => {
                 width: "100%",
                 height: "2px",
                 border: "3px solid #73AD21",
+                textAlign: "right",
               }}
             >
               Curernt Position
