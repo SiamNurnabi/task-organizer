@@ -6,11 +6,9 @@ import * as actionCreators from "../../store/actions/actions";
 
 class LiveTimer extends Component {
   render() {
-    // const taskDurationArray = Object.keys(this.props.tasks).map((task) => {
-    //   return task;
-    // });
-
-    // const pauseTimerHandler = () => clearInterval(this.props.playTimerHandler);
+    if (this.props.notification == true) {
+      this.props.notificationHandler();
+    }
     return (
       <Aux>
         <div className="float-left">
@@ -56,6 +54,7 @@ const mapStateToProps = (state) => {
     ctr: state.counter,
     play: state.play,
     pause: state.pause,
+    notification: state.notification,
   };
 };
 
@@ -64,6 +63,7 @@ const mapDispatchToProps = (dispatch) => {
     playTimerHandler: (counter) => dispatch(actionCreators.playTimer(counter)),
     pauseTimerHandler: () => dispatch(actionCreators.pauseTimer()),
     resetTimerHandler: () => dispatch(actionCreators.resetTimer()),
+    notificationHandler: () => dispatch(actionCreators.pushNofication()),
   };
 };
 
