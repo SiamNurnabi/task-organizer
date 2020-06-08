@@ -6,8 +6,7 @@ const initialState = {
   counter: 0,
   play: false,
   pause: true,
-  notification: true,
-  yoyo: 0,
+  notification: false,
 };
 const reducer = (state = initialState, action) => {
   if (action.type === actionTypes.ADD_TASK) {
@@ -51,7 +50,7 @@ const reducer = (state = initialState, action) => {
       counter: state.counter + 1,
       play: true,
       pause: false,
-      notification: false,
+      notification: true,
     };
   }
   if (action.type === actionTypes.PAUSE_TIMER) {
@@ -68,13 +67,12 @@ const reducer = (state = initialState, action) => {
       counter: 0,
       play: false,
       pause: true,
-      notification: false,
     };
   }
   if (action.type === actionTypes.PUSH_NOTIFICATION) {
     return {
       ...state,
-      yoyo: state.yoyo + 1,
+      notification: false,
     };
   }
 

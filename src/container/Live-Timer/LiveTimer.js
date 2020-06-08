@@ -6,8 +6,27 @@ import * as actionCreators from "../../store/actions/actions";
 
 class LiveTimer extends Component {
   render() {
-    if (this.props.notification == true) {
-      this.props.notificationHandler();
+    let sum = 0;
+    const taskDuraion = this.props.tasks.map((task) => {
+      sum += +task.duration;
+      if (sum <= 60) return +task.duration;
+    });
+    const sortedTaskDuration = taskDuraion.sort(function (a, b) {
+      return a - b;
+    });
+    sortedTaskDuration.unshift(0);
+    let temp = 0;
+    const updatedTaskDuration = sortedTaskDuration.map((task, index) => {
+      if (index === 0) return task;
+      else {
+        console.log(temp);
+        temp += task;
+        return temp;
+      }
+    });
+    console.log(updatedTaskDuration);
+    if (this.props.ctr === 3) {
+      this.props.notificationHandler(2);
     }
     return (
       <Aux>
@@ -63,7 +82,8 @@ const mapDispatchToProps = (dispatch) => {
     playTimerHandler: (counter) => dispatch(actionCreators.playTimer(counter)),
     pauseTimerHandler: () => dispatch(actionCreators.pauseTimer()),
     resetTimerHandler: () => dispatch(actionCreators.resetTimer()),
-    notificationHandler: () => dispatch(actionCreators.pushNofication()),
+    notificationHandler: (value) =>
+      dispatch(actionCreators.pushNofication(value)),
   };
 };
 

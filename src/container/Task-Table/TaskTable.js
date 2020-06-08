@@ -37,6 +37,7 @@ class TaskTable extends Component {
     );
   };
   render() {
+    // console.log(this.props.tasks);
     let tasks = <p className="text-center">Please add task</p>;
     if (this.props.tasks) {
       tasks = this.props.tasks.map((task, index) => {

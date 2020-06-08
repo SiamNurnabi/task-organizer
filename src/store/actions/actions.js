@@ -70,14 +70,12 @@ export const resetTimer = () => {
 };
 
 let alert = null;
-export const pushNofication = () => {
-  let cnt = 0;
-  clearInterval(alert);
+export const pushNofication = (value) => {
+  // let cnt = 0;
+  // clearInterval(alert);
   return (dispatch) => {
-    alert = setInterval(() => {
+    alert = setTimeout(() => {
       dispatch({ type: PUSH_NOTIFICATION });
-      cnt++;
-      if (cnt === 5) clearInterval(alert);
-    }, 1000);
+    }, value * 1000);
   };
 };
