@@ -1,13 +1,11 @@
 import * as actionTypes from "../store/actions/actions";
 
 const initialState = {
-  // { id: 1, name: "siam", duration: "15" }
   tasks: [],
-  counter: 0,
+  counter: -1,
   play: false,
   pause: true,
-  alert: null,
-  temp: 0,
+  valid: false,
 };
 const reducer = (state = initialState, action) => {
   if (action.type === actionTypes.ADD_TASK) {
@@ -35,14 +33,16 @@ const reducer = (state = initialState, action) => {
     const updatedTasks = state.tasks.filter(
       (task) => task.id !== action.taskId
     );
-    return {
-      ...state,
-      tasks: updatedTasks.concat({
-        id: new Date(),
-        name: action.name,
-        duration: action.duration,
-      }),
-    };
+    if (action.name && action.duration) {
+      return {
+        ...state,
+        tasks: updatedTasks.concat({
+          id: new Date(),
+          name: action.name,
+          duration: action.duration,
+        }),
+      };
+    }
   }
 
   if (action.type === actionTypes.PLAY_TIMER) {
@@ -51,7 +51,7 @@ const reducer = (state = initialState, action) => {
       counter: state.counter + 1,
       play: true,
       pause: false,
-      alert: true,
+      valid: true,
     };
   }
   if (action.type === actionTypes.PAUSE_TIMER) {
@@ -59,16 +59,27 @@ const reducer = (state = initialState, action) => {
       ...state,
       play: false,
       pause: true,
+      valid: false,
+      valid: false,
     };
   }
   if (action.type === actionTypes.RESET_TIMER) {
     return {
       ...state,
-      counter: 0,
+      counter: -1,
       play: false,
       pause: true,
-      alert: false,
-      temp: 0,
+      valid: false,
+    };
+  }
+  if (action.type === actionTypes.PUSH_NOTIFICATION) {
+    return {
+      ...state,
+    };
+  }
+  if (action.type === actionTypes.MODIFY_NOTIFICATION) {
+    return {
+      ...state,
     };
   }
 

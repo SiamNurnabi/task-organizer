@@ -37,6 +37,8 @@ export const addTask = (name, duration) => {
 export const PLAY_TIMER = "PLAY_TIMER";
 export const PAUSE_TIMER = "PAUSE_TIMER";
 export const RESET_TIMER = "RESET_TIMER";
+export const PUSH_NOTIFICATION = "PUSH_NOTIFICATION";
+export const MODIFY_NOTIFICATION = "MODIFY_NOTIFICATION";
 
 let timer = null;
 export const playTimer = () => {
@@ -46,7 +48,10 @@ export const playTimer = () => {
     timer = setInterval(() => {
       dispatch({ type: PLAY_TIMER });
       cnt++;
-      if (cnt === 60) clearInterval(timer);
+      if (cnt === 61) {
+        clearInterval(timer);
+        dispatch({ type: RESET_TIMER });
+      }
     }, 1000);
   };
 };
@@ -65,5 +70,13 @@ export const resetTimer = () => {
       clearInterval(timer);
       dispatch({ type: RESET_TIMER });
     }, 0);
+  };
+};
+
+let alert = null;
+export const pushNofication = (value) => {
+  return {
+    type: PUSH_NOTIFICATION,
+    value: value,
   };
 };

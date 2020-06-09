@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Button, Modal } from "react-bootstrap";
 import * as actionCreators from "../../store/actions/actions";
-// import * as actionTypes from "../../store/actions/actions";
-// import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Aux from "../../hoc/Auxiliary/Auxiliary";
 
@@ -176,9 +174,5 @@ const mapDispatchToProps = (dispatch) => {
     //   }),
   };
 };
-
-// TaskTable.propTypes = {
-//   value: PropTypes.number.isRequired,
-// };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaskTable);

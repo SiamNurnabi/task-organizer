@@ -29,17 +29,19 @@ const liveTimerLayout = (props) => {
       return a - b;
     })
     .map((task, index) => {
-      return (
-        <div
-          key={index}
-          style={{
-            height: `${+task * 10}px`,
-            background: `${colors[index % 11]}`,
-          }}
-        >
-          {`${task} second`}
-        </div>
-      );
+      if (task != undefined) {
+        return (
+          <div
+            key={index}
+            style={{
+              height: `${+task * 10}px`,
+              background: `${colors[index % 11]}`,
+            }}
+          >
+            {`${task} second`}
+          </div>
+        );
+      }
     });
   return (
     <div className="container-fluid">
