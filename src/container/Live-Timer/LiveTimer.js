@@ -3,6 +3,7 @@ import Aux from "../../hoc/Auxiliary/Auxiliary";
 import LiveTimerLayout from "../../components/LiveTimerLayout/LiveTimerLayout";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions/actions";
+import { Toast } from "react-bootstrap";
 
 class LiveTimer extends Component {
   render() {
@@ -19,15 +20,59 @@ class LiveTimer extends Component {
     const updatedTaskDuration = sortedTaskDuration.map((task, index) => {
       if (index === 0) return task;
       else {
-        console.log(temp);
+        // console.log(temp);
         temp += task;
         return temp;
       }
     });
-    console.log(updatedTaskDuration);
-    if (this.props.ctr === 3) {
-      this.props.notificationHandler(2);
+    let alert;
+    if (this.props.valid) {
+      alert = updatedTaskDuration.map((task, index) => {
+        console.log(this.props.ctr);
+
+        // if (this.props.valid && this.props.ctr < task) {
+        //   return (
+        //     <Toast
+        //       key={index}
+        //       deley={5000}
+        //       show={this.state.show[index]}
+        //       onClose={() => this.closeAlertHandler(index)}
+        //       autohide
+        //       className="mb-2"
+        //     >
+        //       <Toast.Header>
+        //         <i className="fas fa-bell" />
+        //         &nbsp;
+        //         <strong className="mr-auto">Task has Started</strong>
+        //       </Toast.Header>
+        //     </Toast>
+        //   );
+        // }
+        if (
+          task === this.props.ctr &&
+          index !== updatedTaskDuration.length - 1
+        ) {
+          return (
+            <Toast
+              key={index}
+              deley={5000}
+              show={this.state.show[index]}
+              onClose={() => this.closeAlertHandler(index)}
+              autohide
+              className="mb-2"
+            >
+              <Toast.Header>
+                <i className="fas fa-bell" />
+                &nbsp;
+                <strong className="mr-auto">Task has Started</strong>
+              </Toast.Header>
+            </Toast>
+          );
+        }
+      });
     }
+    console.log(alert);
+
     return (
       <Aux>
         <div className="float-left">
@@ -62,6 +107,7 @@ class LiveTimer extends Component {
         <div className="mt-5">
           <LiveTimerLayout tasks={this.props.tasks} ctr={this.props.ctr} />
         </div>
+        <div className="container pb-2 mb-5">{alert}</div>
       </Aux>
     );
   }
@@ -73,7 +119,7 @@ const mapStateToProps = (state) => {
     ctr: state.counter,
     play: state.play,
     pause: state.pause,
-    notification: state.notification,
+    valid: state.valid,
   };
 };
 
@@ -82,8 +128,7 @@ const mapDispatchToProps = (dispatch) => {
     playTimerHandler: (counter) => dispatch(actionCreators.playTimer(counter)),
     pauseTimerHandler: () => dispatch(actionCreators.pauseTimer()),
     resetTimerHandler: () => dispatch(actionCreators.resetTimer()),
-    notificationHandler: (value) =>
-      dispatch(actionCreators.pushNofication(value)),
+    notificationHandler: () => dispatch(actionCreators.pushNofication()),
   };
 };
 

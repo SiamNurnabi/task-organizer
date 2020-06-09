@@ -1,12 +1,15 @@
 import * as actionTypes from "../store/actions/actions";
 
 const initialState = {
-  // { id: 1, name: "siam", duration: "15" }
-  tasks: [],
+  tasks: [
+    { id: 1, name: "siam", duration: "12" },
+    { id: 2, name: "anan", duration: "8" },
+    { id: 3, name: "sifat", duration: "4" },
+  ],
   counter: 0,
   play: false,
   pause: true,
-  notification: false,
+  valid: false,
 };
 const reducer = (state = initialState, action) => {
   if (action.type === actionTypes.ADD_TASK) {
@@ -50,7 +53,7 @@ const reducer = (state = initialState, action) => {
       counter: state.counter + 1,
       play: true,
       pause: false,
-      notification: true,
+      valid: true,
     };
   }
   if (action.type === actionTypes.PAUSE_TIMER) {
@@ -58,7 +61,8 @@ const reducer = (state = initialState, action) => {
       ...state,
       play: false,
       pause: true,
-      notification: false,
+      valid: false,
+      valid: false,
     };
   }
   if (action.type === actionTypes.RESET_TIMER) {
@@ -67,12 +71,17 @@ const reducer = (state = initialState, action) => {
       counter: 0,
       play: false,
       pause: true,
+      valid: false,
     };
   }
   if (action.type === actionTypes.PUSH_NOTIFICATION) {
     return {
       ...state,
-      notification: false,
+    };
+  }
+  if (action.type === actionTypes.MODIFY_NOTIFICATION) {
+    return {
+      ...state,
     };
   }
 
