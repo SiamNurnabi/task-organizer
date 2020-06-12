@@ -22,7 +22,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         tasks: state.tasks.concat({
-          id: action.id,
+          id: new Date(),
           name: action.name,
           duration: action.duration,
         }),
@@ -78,6 +78,7 @@ const reducer = (state = initialState, action) => {
       play: false,
       pause: true,
       valid: false,
+      notifications: [],
     };
   }
   if (action.type === actionTypes.PUSH_NOTIFICATION) {

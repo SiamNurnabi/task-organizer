@@ -7,7 +7,7 @@ import { Toast } from "react-bootstrap";
 
 class LiveTimer extends Component {
   state = {
-    status: true,
+    counterState: this.props.ctr,
   };
 
   componentDidUpdate() {
@@ -18,19 +18,16 @@ class LiveTimer extends Component {
       sum += +task.duration;
       if (sum <= 60) return task;
     });
-    console.log("[component did update]", modifiedTask);
     const updatedTask = modifiedTask.filter((task) => task !== undefined);
-    console.log("[component did update]", updatedTask);
     let alertTime = 0;
     if (this.props.valid) {
       updatedTask.forEach((task) => {
-        if (this.props.ctr === alertTime && this.state.status) {
-          console.log(task, alertTime);
+        if (
+          this.props.ctr === alertTime &&
+          this.state.counterState !== this.props.ctr
+        ) {
+          this.setState({ counterState: this.props.ctr });
           this.props.notificationHandler(new Date(), task.name, alertTime);
-          this.setState({ status: false });
-          setTimeout(() => {
-            this.setState({ status: true });
-          }, 1000);
         }
         alertTime += Math.floor(task.duration);
       });

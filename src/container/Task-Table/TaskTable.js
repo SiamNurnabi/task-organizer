@@ -7,7 +7,6 @@ import Aux from "../../hoc/Auxiliary/Auxiliary";
 class TaskTable extends Component {
   state = {
     tasks: {
-      id: new Date(),
       name: "",
       duration: "",
     },
