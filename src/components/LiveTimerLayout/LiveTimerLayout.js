@@ -15,34 +15,30 @@ const liveTimerLayout = (props) => {
     "#145A32",
   ];
   let sum = 0;
-  const taskDuraion = props.tasks.map((task) => {
+  const taskDuration = [...props.tasks];
+  const sortedTask = taskDuration.sort((a, b) => a.duration - b.duration);
+  const modifiedTask = sortedTask.map((task) => {
     sum += +task.duration;
-    if (sum <= 60) return task.duration;
+    if (sum <= 60) return task;
   });
-  const taskName = props.tasks.map((task) => {
-    sum += +task.duration;
-    if (sum <= 60) return [task.name, task.duration];
+  const updatedTask = modifiedTask.map((task, index) => {
+    if (task !== undefined) {
+      return (
+        <div
+          key={index}
+          style={{
+            height: `${+task.duration * 10}px`,
+            background: `${colors[index % 11]}`,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {`${task.name}`}
+        </div>
+      );
+    }
   });
-  // console.log(taskName);
-  const updatedTask = taskDuraion
-    .sort(function (a, b) {
-      return a - b;
-    })
-    .map((task, index) => {
-      if (task != undefined) {
-        return (
-          <div
-            key={index}
-            style={{
-              height: `${+task * 10}px`,
-              background: `${colors[index % 11]}`,
-            }}
-          >
-            {`${task} second`}
-          </div>
-        );
-      }
-    });
   return (
     <div className="container-fluid">
       <div className="row">
@@ -96,59 +92,6 @@ const liveTimerLayout = (props) => {
           </div>
         </div>
       </div>
-      {/* <div className="row">
-        <div className="col-md-10">
-          <div className="card">
-            <div className="card-body" style={{ height: "100px" }}></div>
-          </div>
-        </div>
-        <div className="col-md-2">0 Second</div>
-      </div>
-      <div className="row">
-        <div className="col-md-10">
-          <div className="card">
-            <div className="card-body" style={{ height: "100px" }}></div>
-          </div>
-        </div>
-        <div className="col-md-2">10 Second</div>
-      </div>
-      <div className="row">
-        <div className="col-md-10">
-          <div className="card">
-            <div className="card-body" style={{ height: "100px" }}></div>
-          </div>
-        </div>
-        <div className="col-md-2">20 Second</div>
-      </div>
-      <div className="row">
-        <div className="col-md-10">
-          <div className="card">
-            <div className="card-body" style={{ height: "100px" }}></div>
-          </div>
-        </div>
-        <div className="col-md-2">30 Second</div>
-      </div>
-      <div className="row">
-        <div className="col-md-10">
-          <div className="card">
-            <div className="card-body" style={{ height: "100px" }}></div>
-          </div>
-        </div>
-        <div className="col-md-2">40 Second</div>
-      </div>
-      <div className="row">
-        <div className="col-md-10">
-          <div className="card">
-            <div className="card-body" style={{ height: "100px" }}>
-              <p className="card-text">
-                With supporting text below as a natural lead-in to additional
-                content.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-2">50 Second</div>
-      </div> */}
     </div>
   );
 };

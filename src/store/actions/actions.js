@@ -38,7 +38,7 @@ export const PLAY_TIMER = "PLAY_TIMER";
 export const PAUSE_TIMER = "PAUSE_TIMER";
 export const RESET_TIMER = "RESET_TIMER";
 export const PUSH_NOTIFICATION = "PUSH_NOTIFICATION";
-export const MODIFY_NOTIFICATION = "MODIFY_NOTIFICATION";
+export const CLOSE_NOTIFICATION = "CLOSE_NOTIFICATION";
 
 let timer = null;
 export const playTimer = () => {
@@ -73,10 +73,23 @@ export const resetTimer = () => {
   };
 };
 
-let alert = null;
-export const pushNofication = (value) => {
+export const closeNofication = (id) => {
   return {
-    type: PUSH_NOTIFICATION,
-    value: value,
+    type: CLOSE_NOTIFICATION,
+    notificationId: id,
+  };
+};
+
+export const pushNofication = (id, name, duration) => {
+  return (dispatch) => {
+    dispatch({
+      type: PUSH_NOTIFICATION,
+      id: id,
+      name: name,
+      duration: duration,
+    });
+    setTimeout(() => {
+      dispatch(closeNofication(id));
+    }, 10000);
   };
 };

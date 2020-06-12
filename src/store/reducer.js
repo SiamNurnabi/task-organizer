@@ -1,11 +1,20 @@
 import * as actionTypes from "../store/actions/actions";
 
 const initialState = {
-  tasks: [],
+  tasks: [
+    { id: 1, name: "task 1", duration: 15 },
+    { id: 2, name: "task 2", duration: 2.5 },
+    { id: 3, name: "task 3", duration: 25 },
+    { id: 4, name: "task 4", duration: 40 },
+    { id: 5, name: "task 5", duration: 10 },
+    { id: 6, name: "task 6", duration: 15 },
+    { id: 7, name: "task 7", duration: 20 },
+  ],
   counter: -1,
   play: false,
   pause: true,
   valid: false,
+  notifications: [],
 };
 const reducer = (state = initialState, action) => {
   if (action.type === actionTypes.ADD_TASK) {
@@ -13,7 +22,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         tasks: state.tasks.concat({
-          id: new Date(),
+          id: action.id,
           name: action.name,
           duration: action.duration,
         }),
@@ -59,8 +68,7 @@ const reducer = (state = initialState, action) => {
       ...state,
       play: false,
       pause: true,
-      valid: false,
-      valid: false,
+      valid: true,
     };
   }
   if (action.type === actionTypes.RESET_TIMER) {
@@ -75,11 +83,20 @@ const reducer = (state = initialState, action) => {
   if (action.type === actionTypes.PUSH_NOTIFICATION) {
     return {
       ...state,
+      notifications: state.notifications.concat({
+        id: action.id,
+        name: action.name,
+        duration: action.duration,
+      }),
     };
   }
-  if (action.type === actionTypes.MODIFY_NOTIFICATION) {
+  if (action.type === actionTypes.CLOSE_NOTIFICATION) {
+    const updatedNotification = state.notifications.filter((task) => {
+      if (task.id !== action.notificationId) return task;
+    });
     return {
       ...state,
+      notifications: updatedNotification,
     };
   }
 
