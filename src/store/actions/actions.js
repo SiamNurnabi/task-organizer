@@ -40,15 +40,17 @@ export const RESET_TIMER = "RESET_TIMER";
 export const PUSH_NOTIFICATION = "PUSH_NOTIFICATION";
 export const CLOSE_NOTIFICATION = "CLOSE_NOTIFICATION";
 
-let timer = null;
+let timer;
+
+let cnt = 0;
 export const playTimer = () => {
   return (dispatch) => {
-    let cnt = 0;
     clearInterval(timer);
     timer = setInterval(() => {
       dispatch({ type: PLAY_TIMER });
       cnt++;
       if (cnt === 61) {
+        cnt = 0;
         clearInterval(timer);
         dispatch({ type: RESET_TIMER });
       }
@@ -66,6 +68,7 @@ export const pauseTimer = () => {
 };
 export const resetTimer = () => {
   return (dispatch) => {
+    cnt = 0;
     setTimeout(() => {
       clearInterval(timer);
       dispatch({ type: RESET_TIMER });
